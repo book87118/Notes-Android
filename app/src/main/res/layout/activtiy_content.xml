@@ -9,10 +9,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text=""
+            android:id="@+id/et_content"
             android:gravity="center"
             android:textSize="20sp"
             android:textColor="@color/colorPrimaryDark"
-            android:id="@+id/et_content"
+            android:textCursorDrawable="@drawable/black_cursor"
+
             />
 
 

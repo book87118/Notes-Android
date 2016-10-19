@@ -11,13 +11,9 @@ import ching.notes.DB.Notes;
 import ching.notes.MainActivity;
 import ching.notes.R;
 
-/**
- * Created by book871181 on 16/6/11.
- */
 public class PopUpMenu {
     final static String TAG = "PopUpMenu";
     Button bt_delete;
-    Button bt_fix;
 
 
     Context mContext;
@@ -30,6 +26,7 @@ public class PopUpMenu {
         this.mMainActivity = mMainActivity;
         this.position = position;
         initPopUp();
+
     }
 
     public void initPopUp(){
@@ -39,6 +36,7 @@ public class PopUpMenu {
         window.setContentView(view);
         window.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         window.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+
         window.setFocusable(true);
         window.setOutsideTouchable(true);
         window.setAnimationStyle(R.style.AnimationPreview);
@@ -56,13 +54,7 @@ public class PopUpMenu {
         });
 
     }
-    private void editData(){
-        int id = position;
-        String title  = "Test";
-        String notes = "Notes";
-        Notes n = new Notes(id,title,notes);
-        mMainActivity.editData(n);
-    }
+
 
     private void deleteData(){
         mMainActivity.deleteData(position);

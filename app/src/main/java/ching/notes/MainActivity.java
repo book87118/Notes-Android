@@ -1,6 +1,7 @@
 package ching.notes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,7 +67,7 @@ public class MainActivity extends ActionBarActivity {
     private EditText et_showContent;
     private Notes curently_note;
 
-
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +75,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_spring);
 
         bounsDBHelper = new DBhelper(this);
-
+        mContext = this;
         inflate = LayoutInflater.from(getApplicationContext());
 
         notesView = inflate.inflate(R.layout.activity_notes, null);
@@ -84,7 +86,6 @@ public class MainActivity extends ActionBarActivity {
         initNotesComponent(notesView);
         initNotesData();
         initContentComponent(contentView);
-
 
     }
 
@@ -136,9 +137,10 @@ public class MainActivity extends ActionBarActivity {
         Log.d(TAG,"init Notes component");
         Button insertButton = (Button)v.findViewById(R.id.insertButton);
         showDateListView = (ListView)v.findViewById(R.id.showDateListView);
-        showDateListView.addHeaderView(LayoutInflater.from(this).inflate(R.layout.show_sql_item, null), null, false);
         SQLBtnOnclickListener onclickListener = new SQLBtnOnclickListener();
         insertButton.setOnClickListener(onclickListener);
+
+
 
 
         showDateListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -154,15 +156,15 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG,"click DataList");
 
-                    Notes notes = mNotesList.get(position-1);
+                Notes notes = mNotesList.get(position);
                 curently_note = notes;
-                    int m_id = notes.id;
-                    String text = mNotesDao.getTextByPositon(m_id);
-                    Log.d(TAG,"Show Text : " + text);
+                int m_id = notes.id;
+                String text = mNotesDao.getTextByPositon(m_id);
+                Log.d(TAG,"Show Text : " + text);
                 et_showContent.setFocusableInTouchMode(false);
                 et_showContent.setText(text);
                 et_showContent.setTextColor(Color.BLACK);
-                    viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(1);
 
 
 
@@ -182,8 +184,7 @@ public class MainActivity extends ActionBarActivity {
     private void initNotesData(){
         Log.d(TAG,"init Data");
         mNotesDao = new NotesDao(this,bounsDBHelper);
-        mNotesList = new ArrayList<Notes>() {
-        };
+        mNotesList = new ArrayList<Notes>();
 
         if (mNotesDao.getAllDate() != null) {
             mNotesList = mNotesDao.getAllDate();
@@ -205,12 +206,17 @@ public class MainActivity extends ActionBarActivity {
     private void initContentComponent(View v){
 
         et_showContent = (EditText) v.findViewById(R.id.et_content);
+        et_showContent.setFocusableInTouchMode(false);
+
         et_showContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 isDoubleClicked();
-                if(mHasDoubleClicked){
+
+                String st = et_showContent.getText().toString();
+                Log.d(TAG,"Is et_showContent   "+  st.matches(""));
+                if(mHasDoubleClicked &&  !st.matches("") ){
                     et_showContent.setFocusableInTouchMode(true);
                     et_showContent.setTextColor(getResources().getColor(R.color.colorAccent));
 
@@ -375,5 +381,7 @@ public class MainActivity extends ActionBarActivity {
             return 2;
         }
     };
+
+
 
 }

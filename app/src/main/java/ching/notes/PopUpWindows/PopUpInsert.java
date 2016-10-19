@@ -1,6 +1,10 @@
 package ching.notes.PopUpWindows;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteCantOpenDatabaseException;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -10,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -29,38 +34,38 @@ public class PopUpInsert {
 
     MainActivity mMainActivity;
 
-
     PopupWindow window;
     public PopUpInsert(Context mContext, MainActivity mMainActivity){
         this.mContext = mContext;
         this.mMainActivity = mMainActivity;
+
+
         initPopUp();
     }
 
     public void initPopUp(){
 
-
-
+        Log.d(TAG,"initPopUp");
         View view = View.inflate(mContext, R.layout.insert_popup, null);
-        window = new PopupWindow(mContext);
+        et_notes = (EditText)view.findViewById(R.id.et_notes);
+         window = new PopupWindow(mContext);
+
         window.setContentView(view);
-        window.showAtLocation(view, Gravity.CENTER_HORIZONTAL, 0, 0);
-        window.setAnimationStyle(R.style.AnimationPreview);
-        window.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        window.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        window.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        window.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         window.setFocusable(true);
         window.setOutsideTouchable(true);
-        window.update();
-        et_notes = (EditText)view.findViewById(R.id.et_notes);
+        window.setAnimationStyle(R.style.AnimationPreview);
+        window.showAtLocation(view, Gravity.CENTER_HORIZONTAL, 0, 0);
 
 
-        //when popupwindow show up, the background fade.
+//        when popupwindow show up, the background fade.
 
         WindowManager.LayoutParams lp = mMainActivity.getWindow().getAttributes();
         lp.alpha = 0.5f; //0.0-1.0
         mMainActivity.getWindow().setAttributes(lp);
 
-
+//
         window.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {

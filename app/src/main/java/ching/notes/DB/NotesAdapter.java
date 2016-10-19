@@ -12,9 +12,7 @@ import java.util.List;
 
 import ching.notes.R;
 
-/**
- * Created by book871181 on 16/6/9.
- */
+
 public class NotesAdapter extends BaseAdapter {
 
     private Context context;
@@ -52,12 +50,8 @@ public class NotesAdapter extends BaseAdapter {
         Notes notes = mNotesList.get(position);
         if (notes == null){
             return null;
-        }else {
-
-
         }
-
-        ViewHolder holder = null;
+        ViewHolder holder ;
         if (convertView != null){
             holder = (ViewHolder) convertView.getTag();
         }else {
@@ -65,19 +59,17 @@ public class NotesAdapter extends BaseAdapter {
 
             holder = new ViewHolder();
 
-            holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
             holder.tv_notes = (TextView) convertView.findViewById(R.id.tv_notes);
 
             convertView.setTag(holder);
         }
 
-        holder.tv_title.setText(notes.title);
-        String mNotes  = "";
-        if (notes.notes.length() < 15){
+        String mNotes  ;
+        if (notes.notes.length() < 20){
             mNotes = notes.notes;
         }else {
-            StringBuffer sb = new StringBuffer();
-            sb.append(notes.notes.substring(0,14));
+            StringBuilder sb = new StringBuilder();
+            sb.append(notes.notes.substring(0,20));
             sb.append("...");
             mNotes = sb.toString();
         }
@@ -86,7 +78,6 @@ public class NotesAdapter extends BaseAdapter {
         return convertView;
     }
     public static class ViewHolder{
-        public TextView tv_title;
         public TextView tv_notes;
     }
 }
