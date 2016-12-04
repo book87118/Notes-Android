@@ -86,7 +86,7 @@ public class MainActivity extends ActionBarActivity {
         initNotesComponent(notesView);
         initNotesData();
         initContentComponent(contentView);
-
+        List<String> x = new ArrayList<>();
     }
 
     /**
@@ -309,7 +309,7 @@ public class MainActivity extends ActionBarActivity {
     public void deleteData(int position){
 
         Log.d(TAG,"DeleteData");
-        Notes notes = mNotesList.get(position-1);
+        Notes notes = mNotesList.get(position);
         mNotesDao.DeletData(notes.id);
         refreshOrderList();
     }

@@ -48,7 +48,9 @@ public class PopUpInsert {
         Log.d(TAG,"initPopUp");
         View view = View.inflate(mContext, R.layout.insert_popup, null);
         et_notes = (EditText)view.findViewById(R.id.et_notes);
-         window = new PopupWindow(mContext);
+
+        et_notes.setSelectAllOnFocus(true);
+        window = new PopupWindow(mContext);
 
         window.setContentView(view);
         window.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
